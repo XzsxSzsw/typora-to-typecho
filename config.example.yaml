@@ -1,0 +1,63 @@
+# ===================== Typora 到 Typecho 自动发布工具配置文件示例 =====================
+# 此文件展示了配置文件的标准格式，您可以根据自己的需求修改相关参数
+
+# 全局变量（用于插值复用）
+global:
+  domain: www.yourdomain.com          # 站点域名（核心插值变量）
+  timezone: 28800                    # 时区设置（东八区为 28800）
+
+# 站点配置（引用全局变量插值）
+site:
+  home_url: "https://${global.domain}"
+  login_page: "${site.home_url}/admin/login.php"
+  admin_url: "${site.home_url}/admin/"
+  write_post_url: "${site.home_url}/admin/write-post.php"
+  manage_posts_url: "${site.home_url}/admin/manage-posts.php"
+  manage_categories_url: "${site.home_url}/admin/manage-categories.php"
+  delete_post_url: "${site.home_url}/index.php/action/contents-post-edit"
+
+# 登录配置（必填修改）
+login:
+  username: your_username             # 后台登录账号
+  password: "your_password"           # 后台登录密码（包含特殊字符时请用引号包裹）
+  cookie_prefix: "your_cookie_prefix" # Cookie前缀（可在浏览器开发者工具中查看）
+
+# 图片配置（必填修改）
+image:
+  processed_img_root: D:/path/to/processed/images/  # 处理后图片本地存储路径
+  server_img_url: "${site.home_url}/img/"            # 图片服务器URL（可使用插值）
+  space_replace_char: "_"                             # 空格替换字符（用于图片文件名）
+
+# FTP 配置（如需上传图片则必填修改）
+ftp:
+  host: ftp.yourdomain.com           # FTP服务器地址（可以是域名或IP）
+  port: 21                           # FTP端口（默认为21）
+  user: your_ftp_user               # FTP账号
+  password: "your_ftp_password"     # FTP密码（包含特殊字符时请用引号包裹）
+  base_path: "/"                    # FTP根目录
+  timeout: 30                       # 连接超时时间（秒）
+  passive: true                     # 是否使用被动模式（建议开启）
+
+# 请求配置（通常无需修改）
+request:
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+  min_delay: 1.0                    # 最小请求延迟（秒）
+  max_delay: 2.0                    # 最大请求延迟（秒）
+  batch_delay: 2.0                  # 批量处理文件间的延迟（秒）
+
+# 分类配置
+category:
+  default_category_id: 1             # 默认分类ID（可在博客后台查看分类ID）
+
+## 使用说明
+## 1. 将此文件复制为 config.yaml
+## 2. 修改所有标记为"必填修改"的配置项
+## 3. 根据需要调整其他配置项
+## 4. 确保 processed_img_root 目录存在且有写入权限
+## 5. 确保 FTP 配置正确（如果需要上传图片）
+
+## 注意事项
+## - 密码等敏感信息建议使用引号包裹
+## - 插值变量格式为 ${变量名}，可以跨层级引用
+## - 图片处理会占用磁盘空间，工具会自动清理临时文件
+## - 首次使用建议先测试单篇文章发布
