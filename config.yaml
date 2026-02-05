@@ -1,0 +1,48 @@
+# ===================== Typecho 发布工具 YAML 配置文件 =====================
+# 全局变量（用于插值复用）
+global:
+  domain: www.xxx.com         # 站点域名（核心插值变量）
+  timezone: 28800                   # 东八区时区
+
+# 站点配置（引用全局变量插值）
+site:
+  home_url: "https://${global.domain}"
+  login_page: "${site.home_url}/admin/login.php"
+  admin_url: "${site.home_url}/admin/"
+  write_post_url: "${site.home_url}/admin/write-post.php"
+  manage_posts_url: "${site.home_url}/admin/manage-posts.php"
+  manage_categories_url: "${site.home_url}/admin/manage-categories.php"
+  delete_post_url: "${site.home_url}/index.php/action/contents-post-edit"
+
+# 登录配置（必填修改）
+login:
+  username: joker                    # 后台登录账号
+  password: "xxxxxxx"        # 后台登录密码（特殊字符用引号包裹）
+  cookie_prefix: "58424bdbe3f36515e83b7a5cdf487d72"  # Cookie前缀,如果该前缀无用，请自行本地查看登录cookie进行替换
+
+# 图片配置（必填修改）
+image:
+  processed_img_root: D:/笔记图片/typora_upload_imgs/  # 处理后图片本地路径
+  server_img_url: "${site.home_url}/img/"             # 图片服务器URL（插值）
+  space_replace_char: "_"                             # 空格替换字符
+
+# FTP 配置（必填修改）
+ftp:
+  host: 64.xxx.xxx.17                 # FTP服务器IP
+  port: 21222                        # FTP端口
+  user: note                         # FTP账号
+  password: "xxxxxx"           # FTP密码
+  base_path: "/"                     # FTP根目录
+  timeout: 30                        # 超时时间
+  passive: true                      # 被动模式
+
+# 请求配置
+request:
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+  min_delay: 1.0
+  max_delay: 2.0
+  batch_delay: 2.0
+
+# 分类配置
+category:
+  default_category_id: 1             # 默认分类ID
